@@ -1,1 +1,2 @@
-# quantumultx-
+# quantumultx
+一个quantumultx全配置文件，包含大量去广告规则和全分流规则
