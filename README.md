@@ -1,2 +1,2 @@
-# quantumultx
-一个quantumultx全配置文件，包含大量去广告规则和全分流规则
+# Script
+一个包括Quantumultx和Loon的部分配置及脚本的仓库
