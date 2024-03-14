@@ -1,2 +1,2 @@
-# Script
+# Scripts
 一个包括Quantumultx和Loon的部分配置及脚本的仓库
