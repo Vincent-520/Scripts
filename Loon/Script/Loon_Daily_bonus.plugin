@@ -1,0 +1,52 @@
+#!name= 🐻 NobyDa签到脚本
+#!desc= 包括哔哩漫画、贴吧、快看、爱奇艺，携程旅行、巴哈姆特。部分脚本获取Cookie方法请看脚本注释。由Vincent修改以支持订阅到插件模块。
+#!openUrl = https://t.me/NobyDa
+#!author= NobyDa[https://github.com/NobyDa]
+#!homepage= https://github.com/NobyDa/Script/tree/master
+#!icon= https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png
+#!tag = 签到脚本
+
+[Argument]
+cron1 = input,"30 8 * * *",tag="携程旅行 [签到]",desc=默认时间为8:30
+cron2 = input,"10 9 * * *",tag="爱奇艺 [会员签到]",desc=默认时间为9:10
+cron3 = input,"0 9 * * *",tag="哔哩漫画 [签到]",desc=默认时间为9:00
+cron4 = input,"40 8 * * *",tag="百度贴吧 [签到]",desc=默认时间为8:40
+cron5 = input,"10 9 * * *",tag="快看漫画 [签到]",desc=默认时间为9:10
+cron6 = input,"20 8 * * *",tag="巴哈姆特 [签到]",desc=默认时间为8:20
+Get-token1 = switch,false,tag=携程旅行 [Cookie],desc=成功后请关闭
+Get-token2 = switch,false,tag=爱奇艺 [Cookie],desc=成功后请关闭
+Get-token3 = switch,false,tag=哔哩漫画 [Cookie],desc=成功后请关闭
+Get-token4 = switch,false,tag=百度贴吧 [Cookie],desc=成功后请关闭
+Get-token5 = switch,false,tag=快看漫画 [Cookie],desc=成功后请关闭
+
+[Script]
+cron {cron1} script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Ctrip-DailyBonus/Ctrip.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/ctrip.png, timeout=300, tag=携程旅行 [签到]
+
+http-response ^https:\/\/m\.ctrip\.com\/restapi\/soa2\/\d+\/[a-zA-Z]+Login(?:$|\?) script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Ctrip-DailyBonus/Ctrip.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/ctrip.png, requires-body=true, enabled={Get-token1}, tag=携程旅行 [Cookie]
+
+
+cron {cron2} script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/iQIYI.png, timeout=300, tag=爱奇艺 [会员签到]
+
+http-request ^https:\/\/passport\.iqiyi\.com\/apis\/user\/ script-path=https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/iQIYI.png, enabled={Get-token2}, tag=爱奇艺 [Cookie]
+
+
+cron {cron3} script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png, timeout=300, tag=哔哩漫画 [签到]
+
+http-request ^https:\/\/app\.bilibili\.com\/x\/v2\/account\/myinfo script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bilibili-DailyBonus/Manga.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/manga.png, enabled={Get-token3}, tag=哔哩漫画 [Cookie]
+
+
+cron {cron4} script-path=https://raw.githubusercontent.com/NobyDa/Script/master/BDTieBa-DailyBonus/TieBa.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/tieba.png, timeout=300, tag=百度贴吧 [签到]
+
+http-request ^https?:\/\/(c\.tieba|tiebac)\.baidu\.com\/c\/s\/login script-path=https://raw.githubusercontent.com/NobyDa/Script/master/BDTieBa-DailyBonus/TieBa.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/tieba.png, enabled={Get-token4}, tag=百度贴吧 [Cookie]
+
+
+cron {cron5} script-path=https://raw.githubusercontent.com/NobyDa/Script/master/KuaiKan-DailyBonus/KKMH.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/KuaiKan.png, timeout=300, tag=快看漫画 [签到]
+
+http-request ^https?:\/\/api\.kkmh\.com\/v\d\/passport\/user script-path=https://raw.githubusercontent.com/NobyDa/Script/master/KuaiKan-DailyBonus/KKMH.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/KuaiKan.png, enabled={Get-token5}, tag=快看漫画 [Cookie]
+
+
+cron {cron6} script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Bahamut/BahamutDailyBonus.js, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/bahamutGame.png, timeout=300, tag=巴哈姆特 [签到]
+
+
+[MITM]
+hostname = passport.iqiyi.com, app.bilibili.com, c.tieba.baidu.com, tiebac.baidu.com, api.kkmh.com, m.ctrip.com
