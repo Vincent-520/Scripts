@@ -7,10 +7,11 @@
 #!tag = 签到脚本
 
 [Argument]
+cron = input,"5 0 * * *",tag=蜜雪冰城自动签到,desc=默认时间为0:05
 Get-token = switch,false,tag=蜜雪冰城获取token,desc=成功后请关闭
 
 [Script]
-cron "5 0 * * *" script-path=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js, timeout=120, tag=定时签到
+cron {cron} script-path=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js, timeout=120, tag=定时签到
 http-response ^https:\/\/mxsa\.mxbc\.net\/api\/v1\/customer\/info script-path=https://gist.githubusercontent.com/Sliverkiss/865c82e42a5730bb696f6700ebb94cee/raw/mxbc.js, requires-body=true, timeout=60, tag=蜜雪冰城获取token, enable={Get-token}
 
 [MITM]
